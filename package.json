@@ -1,0 +1,33 @@
+{
+  "name": "rapid-test",
+  "version": "0.0.1",
+  "description": "functional test of rapidJS",
+  "main": "start.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "clouda+",
+    "javascript",
+    "cloudajs",
+    "webapp",
+    "framework",
+    "web",
+    "app",
+    "api",
+    "core"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Clouda-team/rapid-httpserver.git"
+  },
+  "author": "wangsu <wangsu01@baidu.com>",
+  "contributors": [
+    "huangxin <huangxin03@baidu.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "rapid-core": "0.0.1",
+    "rapid-httpserver": "0.0.0"
+  }
+}
