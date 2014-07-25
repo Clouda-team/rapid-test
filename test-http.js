@@ -3,8 +3,8 @@
  */
 	require("rapid-core");
 	require("rapid-httpserver");
-	require("rapid-webrpc");
-	require("rapid-simple-mongo");
+//	require("rapid-webrpc");
+//	require("rapid-simple-mongo");
 	
 	
 	rapid.define({
