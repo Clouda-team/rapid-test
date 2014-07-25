@@ -20,6 +20,10 @@
 				return;
 			},
 			mapping:[
+				{
+					url:"/",
+					resource:"/app/index.html"
+				},
 	           {
 					url:"/sync_error",
 					doAction:function(){

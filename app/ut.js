@@ -11,8 +11,8 @@
 		var rs = null;
 		switch(this.getResponseHeader("Content-Type")){
 			case  "application/json" :
+				var df = document.createDocumentFragment();
 				rs = JSON.parse(this.response);
-				
 				if(rs.error == 0){
 					rs = rs.content;
 					
@@ -32,9 +32,11 @@
 						descripton.className = item.description ? "description" : "description none"
 						descripton.innerHTML = item.description || "None";
 						
-						ol.appendChild(li);
+						df.appendChild(li);
 						
 					});
+					
+					ol.appendChild(df);
 				}
 				
 				break;
