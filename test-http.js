@@ -16,6 +16,7 @@
 			autoStart:true,
 			loading_dir:["/src"],
 			defaultAction:function(){
+				var req = this.request;
 				this.emit("error",new Error("can not handle this request [" + req.url + "]"));
 				return;
 			},
