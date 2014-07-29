@@ -6,6 +6,7 @@ var http = require('http'),
     assert = require('assert'),
     fs = require('fs');
 describe('fork http server', function () {
+    this.timeout(10000);
     process.argv = ['node', fs.realpathSync('test-http.js')];
     require('../test-http');
     console.log('ROOT_DIR');
