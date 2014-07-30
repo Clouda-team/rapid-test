@@ -5,6 +5,7 @@ var config = {
 var http = require('http'),
     assert = require('assert'),
     fs = require('fs');
+
 describe('fork http server', function () {
     process.argv = ['node', fs.realpathSync('test-http.js')];
     require('../test-http');
@@ -63,11 +64,54 @@ describe('redirect', function () {
     });
 });
 
-
-describe('error', function () {
-    // TODO
+describe('nullaction', function () {
+	it('/nullaction', function (next) {
+        request({
+            path: '/nullaction'
+        }, function (res) {
+        	assert.strictEqual(res.headers['x-set-by-filter-what'], "whatisthis");
+        	assert.strictEqual(res.headers['x-set-by-filter-who'], "whoisthis");
+        	assert.strictEqual(res.headers['x-set-by-filter-how'], "howdothis");
+        	assert.strictEqual(res.statusCode,404)
+            next();
+        },true).end();
+    });
 });
 
+describe('echo', function () {
+	it('/echo?msg=123', function (next) {
+		request({
+			path: '/echo?msg=123'
+		}, function (res) {
+			var str = res.toString("utf-8")
+			assert.ok(str == "123");
+			next();
+		}).end();
+	});
+	
+	it('/sayhello', function (next) {
+		request({
+			path: '/sayhello'
+		}, function (res) {
+			var str = res.toString("utf-8")
+			assert.ok(str == "Hello, wangsu!!");
+			next();
+		}).end();
+	});
+});
+
+describe('getList', function () {
+	it('/getList', function (next) {
+		request({
+			path: '/getTestList'
+		}, function (res) {
+			var obj = JSON.parse(res.toString("utf-8"));
+			console.dir(obj);
+			assert.ok(!!obj);
+			next();
+		}).end();
+	});
+});
 
 describe('cookie', function () {
     it('set-cookie', function (next) {
@@ -95,6 +139,32 @@ describe('cookie', function () {
     });
 });
 
+describe('sync_error', function () {
+	it('/sync_error', function (next) {
+		request({
+			path: '/sync_error'
+		}, function (res) {
+			assert.strictEqual(res.headers['x-set-by-filter-how'], "howdothis");
+			assert.strictEqual(res.statusCode,500);
+			next();
+		},true).end();
+	});
+});
+
+
+
+describe('async_error', function () {
+	//this.timeout(2000);
+	it('/async_error', function (next) {
+		request({
+			path: '/async_error'
+		}, function (res) {
+			assert.strictEqual(res.headers['x-set-by-filter-how'], "howdothis");
+			assert.strictEqual(res.statusCode,500);
+			next();
+		},true).end();
+	});
+});
 
 function read(file) {
     return fs.readFileSync(file);

@@ -4,12 +4,37 @@
 var path =require("path");
 var httpd = rapid.use("plugin.rapid-httpserver");
 
+httpd.defineFilter("whatFilter",function(){
+	this.setHeader({"x-set-by-filter-what":"whatisthis"});
+	this.next();
+});
 
-httpd.defineAction("replace_error",function(){
+httpd.defineFilter("whoFilter",function(){
+	this.setHeader({"x-set-by-filter-who":"whoisthis"});
+	this.next();
+});
+
+httpd.defineFilter("howFilter",['default_request'],function(req){
+	
+	this.setHeader({"x-set-by-filter-how":"howdothis"});
+	this.setHeader(
+		"x-request-headers-count", Object.keys(req.headers).length
+	);
+	
+	this.next();
+});
+
+httpd.defineAction("replace_error",['default_response'],function(res){
 	httpd.defineAction("error",function(){
 		this.send(JSON.stringify(this.params) , 500 , "application/json");
 	});
-	this.send("ok! back and clieck 5 or 6");
+	res.end("ok! back and clieck 5 or 6");
+});
+
+httpd.defineAction("simpleEcho",['default_response'],function(res){
+	this.parseParams(function(err,params){
+		res.end(params.msg);
+	})
 });
 
 httpd.defineAction("forwardImg",function(){
