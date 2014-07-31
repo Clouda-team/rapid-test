@@ -141,6 +141,7 @@ describe('cookie', function () {
 });
 
 describe('sync_error', function () {
+	this.timeout(100);
 	it('/sync_error', function (next) {
 		request({
 			path: '/sync_error'
@@ -155,7 +156,7 @@ describe('sync_error', function () {
 
 
 describe('async_error', function () {
-	//this.timeout(2000);
+	this.timeout(2500);
 	it('/async_error', function (next) {
 		request({
 			path: '/async_error'
